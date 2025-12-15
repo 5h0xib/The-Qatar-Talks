@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,7 +90,6 @@
 
     .logo-placeholder {
       display: flex;
-      align-items: center;
       font-size: 15px;
       font-weight: 700;
       color: var(--color-primary);
@@ -129,6 +127,7 @@
       color: var(--color-text);
       cursor: pointer;
       z-index: 1001;
+      margin: 40px;
     }
 
     @media (max-width: 768px) {
@@ -251,16 +250,6 @@
       color: var(--color-secondary);
     }
 
-    .header-actions .btn {
-      padding: 10px 24px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: inline-block;
-    }
-
     .btn-primary {
       background-color: var(--color-secondary);
       color: white;
@@ -289,7 +278,7 @@
       align-items: center;
       text-align: center;
       width: 100%;
-      margin-top: 60px;
+      margin-top: 160px;
     }
 
     .hero-content {
@@ -367,6 +356,20 @@
     .video-controls button:hover {
       background: var(--color-secondary);
       transform: scale(1.1);
+    }
+
+    /* Volume Slider */
+    #volumeSlider {
+      width: 0;
+      opacity: 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+
+    .video-controls:hover #volumeSlider {
+      width: 80px;
+      opacity: 1;
     }
 
     .hero-quote {
@@ -815,7 +818,14 @@
       aspect-ratio: auto;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+      /* Contain zoom */
     }
+
+    /* Fix: Ensure image container handles overflow if we want the card bounds to be the crop area */
+    /* Actually we need to wrap the image or set overflow on the card. 
+       .finalist-card.has-image is the wrapper. */
+
 
     .finalist-card.has-image::before {
       display: none;
@@ -829,6 +839,13 @@
       border-radius: 6px;
       display: block;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.4s ease;
+      /* Smooth hover transition */
+    }
+
+    .finalist-card.has-image:hover img {
+      transform: scale(1.1);
+      /* Zoom effect */
     }
 
     .finalist-info {
@@ -1104,10 +1121,10 @@
         font-weight: 900;
         position: absolute;
         right: 50%;
-        bottom: -1.5rem;
+        bottom: -5.5rem;
         top: auto;
         transform: translateX(50%);
-        font-size: 1.5rem;
+        font-size: 2.5rem;
         color: #B08D2C;
         z-index: 10;
       }
@@ -1615,6 +1632,16 @@
       margin: 1rem 0;
       font-weight: 600;
     }
+
+    .header-actions .btn {
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-block;
+    }
   </style>
 </head>
 
@@ -1624,8 +1651,8 @@
   <header class="header">
     <div class="container header-content">
       <div class="logo">
-        <div class="logo-placeholder"><img src="./assets/logo.png" height="100px" alt="">
-          <h2>The Qatar<br> Talks</h2>
+        <div class="logo-placeholder">
+          <img src="./assets/logo.png" height="180px" alt="">
         </div>
       </div>
 
@@ -1636,44 +1663,33 @@
         <ul>
           <li><a href="#home" class="active">Home</a></li>
           <li><a href="#about">About Us</a></li>
-          <li class="has-megamenu">
-            <a href="#2025">2025 Contest</a>
-            <div class="megamenu">
-              <div class="megamenu-col">
-                <h4>Contestants</h4>
-                <a href="#2025">2025 Finalists</a>
-                <a href="#2025-champions">2025 Champions</a>
-              </div>
-            </div>
-          </li>
+          <li><a href="#2025">2025 Contest</a></li>
           <li><a href="#2024-champions">Past Contest</a></li>
           <li><a href="#news">News & Media</a></li>
           <li><a href="#contact">Contact Us</a></li>
+          <div class="header-actions">
+            <a href="#register" class="btn btn-primary" style="color: white;">Login / Registration</a>
+          </div>
         </ul>
       </nav>
-      <div class="header-actions">
-        <a href="#register" class="btn btn-primary">Login / Registration</a>
-      </div>
     </div>
   </header>
 
   <!-- Hero -->
   <section class="hero">
     <div class="container hero-container">
-      <div class="hero-content">
-        <h1>The Qatar Talks</h1>
-        <p class="hero-subtitle">Where Champions Are Made | 2025 Contest</p>
-        <a href="#register" class="btn-gold">Login / Registration</a>
-      </div>
+
       <div class="hero-media-wrapper">
         <div class="hero-video-placeholder">
-          <video autoplay muted loop playsinline id="heroVideo">
+          <video muted loop playsinline id="heroVideo">
             <source src="./assets/Hero-Video.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
           <div class="video-controls">
-            <button id="playPauseBtn"><i class="fas fa-pause"></i></button>
-            <button id="muteBtn"><i class="fas fa-volume-mute"></i></button>
+            <button id="playPauseBtn" title="Play/Pause"><i class="fas fa-play"></i></button>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0">
+            <button id="muteBtn" title="Mute/Unmute"><i class="fas fa-volume-mute"></i></button>
+            <button id="fullscreenBtn" title="Fullscreen"><i class="fas fa-expand"></i></button>
           </div>
         </div>
         <div class="hero-quote">
@@ -1684,141 +1700,7 @@
   </section>
 
 
-  <!-- About Us (Expandable) -->
-  <section class="section about-section" id="about" style="text-align: center; padding-bottom: 2rem;">
-    <div class="container">
-      <div class="container">
-        <h2 class="section-title" style="color: var(--color-secondary);">About Us</h2>
-        <p style="max-width: 800px; margin: 0 auto 2rem; color: #f0f0f0; font-size: 1.1rem; font-weight: 300;">
-          The Qatar Talks is a premier communication platform celebrating 20 years of empowering voices.
-          Join us as we explore the art of eloquence and leadership.
-        </p>
 
-        <button id="read-story-btn" class="btn btn-outline-gold" style="padding: 1rem 3rem; font-size: 1.1rem;">
-          Read Our Story <i class="fas fa-chevron-down" style="margin-left: 10px;"></i>
-        </button>
-
-        <div id="about-full-story">
-
-          <!-- 1. Our Legacy -->
-          <div class="story-section">
-            <div class="story-grid">
-              <div class="story-content">
-                <h3 class="story-title">1. About The Qatar Talks</h3>
-                <h4 style="color: var(--color-primary); margin-bottom: 1rem;">Our Legacy: 20 Years of Empowering Voices
-                </h4>
-                <p>
-                  The Qatar Talks is the annual flagship event of the International Competent Communicators (ICC-ONE),
-                  an organization founded on the principle of Community Social Responsibility (CSR). Since its
-                  inception,
-                  this national initiative has evolved from a competition into a vibrant platform that celebrates the
-                  art
-                  and science of communication.
-                </p>
-                <br>
-                <p>
-                  The journey, made possible by the vision and dedication of our founder, <strong>Mr. Mohomed Ikhlas
-                    Farid</strong>,
-                  marks its 20th edition in 2025. Over two decades, The Qatar Talks has proudly noted the benefit
-                  to thousands of residents and school children who have seen improvement in their communication
-                  and leadership skills.
-                </p>
-              </div>
-              <div class="story-image" style="text-align: center;">
-                <img src="assets/founder.png" alt="Mohomed Ikhlas Farid - Founder"
-                  style="width: 100%; max-width: 350px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-                <div style="margin-top: 1rem; color: #f4f4f4;">
-                  <h4 style="margin: 0; color: var(--color-secondary);">Mohomed Ikhlas Farid</h4>
-                  <p style="margin: 0; font-size: 1rem; opacity: 0.9;">Founder</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2. Our Mission -->
-          <div class="story-section">
-            <div class="story-grid">
-              <div class="story-image" style="text-align: center;">
-                <img src="assets/mission-team.jpg" alt="The Qatar Talks Mission Team"
-                  style="width: 100%; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-              </div>
-              <div class="story-content">
-                <h3 class="story-title">2. Our Mission: Communicate, Connect, Conquer</h3>
-                <p>
-                  Our mission is to nurture eloquence, creativity, and leadership among participants from diverse
-                  communities in Qatar. We believe that public speaking is an enduring power—a vital bridge that
-                  connects minds and hearts, empowering individuals to become agents of positive change.
-                </p>
-                <p>The Qatar Talks is a forum for:</p>
-                <ul>
-                  <li><strong>Nurturing Skills:</strong> Developing essential communication skills, critical thinking,
-                    and
-                    confidence.</li>
-                  <li><strong>Fostering Community:</strong> Strengthening bonds, promoting mutual respect, and cultural
-                    understanding across different communities to build a more inclusive and informed society.</li>
-                  <li><strong>Inspiring Growth:</strong> Encouraging the community to embrace the mantra:</li>
-                </ul>
-                <div class="quote-box">
-                  "SUCCESS IS NOT FINAL, FAILURE IS NOT FATAL: IT IS THE COURAGE TO CONTINUE THAT COUNTS."
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 3. Tradition & Technology -->
-          <div class="story-section">
-            <h3 class="story-title">3. Standing at the Crossroads of Tradition and Technology</h3>
-            <div class="story-content" style="max-width: 900px; margin: 0 auto;">
-              <p>
-                In a world reshaped by Artificial Intelligence (AI), The Qatar Talks stands firm on the irreplaceable
-                essence of human connection. While technology aids how we draft and prepare speeches, the core of our
-                event is the human warmth, emotion, and authenticity that our participants bring to the stage.
-              </p>
-              <br>
-              <div class="story-image" style="text-align: center; margin: 2rem 0;">
-                <img src="assets/tradition-tech.jpg" alt="Tradition and Technology at The Qatar Talks"
-                  style="width: 100%; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-              </div>
-              <br>
-              <h4 style="color: var(--color-primary); margin-bottom: 1rem;">The 2025 Championship</h4>
-              <p>
-                The Qatar Talks Championship 2025 embraces innovation by featuring a blend of diverse forms of
-                expression.
-                We proudly introduce:
-              </p>
-              <ul>
-                <li><strong>Tall Tales:</strong> A new category celebrating imagination, humor, and the blending of fact
-                  and fiction through creative storytelling.</li>
-                <li><strong>Inspirational Talk:</strong> A segment dedicated to sharing ideas, stories, and visions that
-                  motivate and uplift.</li>
-              </ul>
-              <p>
-                This forum is an opportunity for every participant to share their perspectives with confidence and
-                passion,
-                using their voices to inspire, connect, and transform.
-              </p>
-            </div>
-          </div>
-
-          <!-- 4. Gratitude -->
-          <div class="story-section">
-            <h3 class="story-title">4. Our Gratitude</h3>
-            <div class="story-content">
-              <p>
-                An event of this magnitude is only possible through the unstinted support of our dedicated team,
-                our multi-national, self-devoted Judges, our various Role Players, and our generous Sponsors and
-                well-wishers who support this annual CSR initiative.
-              </p>
-              <hr style="border: 0; border-top: 1px solid #ddd; margin: 2rem 0;">
-              <p style="text-align: center; font-size: 1.25rem; font-weight: 600; color: var(--color-secondary);">
-                We invite you to join our journey and witness the power of a voice well-trained and a message well-told.
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-  </section>
 
   <!-- Flipbook -->
   <section class="section flipbook-section">
@@ -2345,6 +2227,69 @@
           }
         });
       }
+
+      // --- Video Controls Logic ---
+      const video = document.getElementById('heroVideo');
+      const playPauseBtn = document.getElementById('playPauseBtn');
+      const muteBtn = document.getElementById('muteBtn');
+      const volumeSlider = document.getElementById('volumeSlider');
+      const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+      if (video) {
+        // Play/Pause
+        playPauseBtn.addEventListener('click', () => {
+          if (video.paused) {
+            video.play();
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+          } else {
+            video.pause();
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+          }
+        });
+
+        // Mute/Unmute
+        muteBtn.addEventListener('click', () => {
+          video.muted = !video.muted;
+          updateVolumeIcon();
+        });
+
+        // Volume Slider
+        volumeSlider.addEventListener('input', (e) => {
+          video.volume = e.target.value;
+          video.muted = false; // Unmute if volume changes
+          updateVolumeIcon();
+        });
+
+        function updateVolumeIcon() {
+          if (video.muted || video.volume === 0) {
+            muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            volumeSlider.value = 0;
+          } else if (video.volume < 0.5) {
+            muteBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+            volumeSlider.value = video.volume;
+          } else {
+            muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            volumeSlider.value = video.volume;
+          }
+        }
+
+        // Initialize state
+        video.muted = true; // Ensure starts muted as per tag (user can unmute)
+        volumeSlider.value = 0;
+
+        // Fullscreen
+        fullscreenBtn.addEventListener('click', () => {
+          if (video.requestFullscreen) {
+            video.requestFullscreen();
+          } else if (video.mozRequestFullScreen) { /* Firefox */
+            video.mozRequestFullScreen();
+          } else if (video.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+            video.webkitRequestFullscreen();
+          } else if (video.msRequestFullscreen) { /* IE/Edge */
+            video.msRequestFullscreen();
+          }
+        });
+      }
     });
   </script>
 
@@ -2488,14 +2433,16 @@
         <div class="gallery-item"></div>
       </div>
 
-      <a href="gallery.html" class="btn btn-primary">View Full Gallery</a>
+      <a href="gallery.html" class="btn btn-primary" style="border-radius: 10px;">View Full Gallery</a>
     </div>
   </section>
 
   <!-- How to Join Section -->
-  <section class="section join-section" id="join">
+  <section class="section about-section" id="join">
     <div class="container">
-      <h2 class="section-title">HOW TO JOIN</h2>
+      <h2 class="section-title" style="display: inline-block; padding-bottom: 10px; color: var(--color-secondary);">How
+        to
+        Join</h2>
 
       <div class="join-grid">
         <!-- Step 1 -->
@@ -2534,6 +2481,143 @@
 
 
 
+
+
+  <!-- About Us (Expandable) -->
+  <section class="section about-section" id="about" style="text-align: center; padding-bottom: 2rem;">
+    <div class="container">
+      <div class="container">
+        <h2 class="section-title" style="color: var(--color-secondary);">About Us</h2>
+        <p style="max-width: 800px; margin: 0 auto 2rem; color: #f0f0f0; font-size: 1.1rem; font-weight: 300;">
+          The Qatar Talks is a premier communication platform celebrating 20 years of empowering voices.
+          Join us as we explore the art of eloquence and leadership.
+        </p>
+
+        <button id="read-story-btn" class="btn btn-outline-gold" style="padding: 1rem 3rem; font-size: 1.1rem;">
+          Read Our Story <i class="fas fa-chevron-down" style="margin-left: 10px;"></i>
+        </button>
+
+        <div id="about-full-story">
+
+          <!-- 1. Our Legacy -->
+          <div class="story-section">
+            <div class="story-grid">
+              <div class="story-content">
+                <h3 class="story-title">1. About The Qatar Talks</h3>
+                <h4 style="color: var(--color-primary); margin-bottom: 1rem;">Our Legacy: 20 Years of Empowering Voices
+                </h4>
+                <p>
+                  The Qatar Talks is the annual flagship event of the International Competent Communicators (ICC-ONE),
+                  an organization founded on the principle of Community Social Responsibility (CSR). Since its
+                  inception,
+                  this national initiative has evolved from a competition into a vibrant platform that celebrates the
+                  art
+                  and science of communication.
+                </p>
+                <br>
+                <p>
+                  The journey, made possible by the vision and dedication of our founder, <strong>Mr. Mohomed Ikhlas
+                    Farid</strong>,
+                  marks its 20th edition in 2025. Over two decades, The Qatar Talks has proudly noted the benefit
+                  to thousands of residents and school children who have seen improvement in their communication
+                  and leadership skills.
+                </p>
+              </div>
+              <div class="story-image" style="text-align: center;">
+                <img src="assets/founder.png" alt="Mohomed Ikhlas Farid - Founder"
+                  style="width: 100%; max-width: 350px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                <div style="margin-top: 1rem; color: #f4f4f4;">
+                  <h4 style="margin: 0; color: var(--color-secondary);">Mohomed Ikhlas Farid</h4>
+                  <p style="margin: 0; font-size: 1rem; opacity: 0.9;">Founder</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Our Mission -->
+          <div class="story-section">
+            <div class="story-grid">
+              <div class="story-image" style="text-align: center;">
+                <img src="assets/mission-team.jpg" alt="The Qatar Talks Mission Team"
+                  style="width: 100%; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+              </div>
+              <div class="story-content">
+                <h3 class="story-title">2. Our Mission: Communicate, Connect, Conquer</h3>
+                <p>
+                  Our mission is to nurture eloquence, creativity, and leadership among participants from diverse
+                  communities in Qatar. We believe that public speaking is an enduring power—a vital bridge that
+                  connects minds and hearts, empowering individuals to become agents of positive change.
+                </p>
+                <p>The Qatar Talks is a forum for:</p>
+                <ul>
+                  <li><strong>Nurturing Skills:</strong> Developing essential communication skills, critical thinking,
+                    and
+                    confidence.</li>
+                  <li><strong>Fostering Community:</strong> Strengthening bonds, promoting mutual respect, and cultural
+                    understanding across different communities to build a more inclusive and informed society.</li>
+                  <li><strong>Inspiring Growth:</strong> Encouraging the community to embrace the mantra:</li>
+                </ul>
+                <div class="quote-box">
+                  "SUCCESS IS NOT FINAL, FAILURE IS NOT FATAL: IT IS THE COURAGE TO CONTINUE THAT COUNTS."
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Tradition & Technology -->
+          <div class="story-section">
+            <h3 class="story-title">3. Standing at the Crossroads of Tradition and Technology</h3>
+            <div class="story-content" style="max-width: 900px; margin: 0 auto;">
+              <p>
+                In a world reshaped by Artificial Intelligence (AI), The Qatar Talks stands firm on the irreplaceable
+                essence of human connection. While technology aids how we draft and prepare speeches, the core of our
+                event is the human warmth, emotion, and authenticity that our participants bring to the stage.
+              </p>
+              <br>
+              <div class="story-image" style="text-align: center; margin: 2rem 0;">
+                <img src="assets/tradition-tech.jpg" alt="Tradition and Technology at The Qatar Talks"
+                  style="width: 100%; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+              </div>
+              <br>
+              <h4 style="color: var(--color-primary); margin-bottom: 1rem;">The 2025 Championship</h4>
+              <p>
+                The Qatar Talks Championship 2025 embraces innovation by featuring a blend of diverse forms of
+                expression.
+                We proudly introduce:
+              </p>
+              <ul>
+                <li><strong>Tall Tales:</strong> A new category celebrating imagination, humor, and the blending of fact
+                  and fiction through creative storytelling.</li>
+                <li><strong>Inspirational Talk:</strong> A segment dedicated to sharing ideas, stories, and visions that
+                  motivate and uplift.</li>
+              </ul>
+              <p>
+                This forum is an opportunity for every participant to share their perspectives with confidence and
+                passion,
+                using their voices to inspire, connect, and transform.
+              </p>
+            </div>
+          </div>
+
+          <!-- 4. Gratitude -->
+          <div class="story-section">
+            <h3 class="story-title">4. Our Gratitude</h3>
+            <div class="story-content">
+              <p>
+                An event of this magnitude is only possible through the unstinted support of our dedicated team,
+                our multi-national, self-devoted Judges, our various Role Players, and our generous Sponsors and
+                well-wishers who support this annual CSR initiative.
+              </p>
+              <hr style="border: 0; border-top: 1px solid #ddd; margin: 2rem 0;">
+              <p style="text-align: center; font-size: 1.25rem; font-weight: 600; color: var(--color-secondary);">
+                We invite you to join our journey and witness the power of a voice well-trained and a message well-told.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+  </section>
 
   <!-- Sponsors -->
   <section class="section sponsors-section">
