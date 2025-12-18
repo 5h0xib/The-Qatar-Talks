@@ -1116,14 +1116,7 @@
     }
 
     .gallery-item::after {
-      /* Placeholder text */
-      content: 'Image';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #999;
-      font-weight: 500;
+      display: none;
     }
 
     .gallery-section .btn-primary {
