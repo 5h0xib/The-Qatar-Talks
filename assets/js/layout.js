@@ -33,7 +33,7 @@ function loadHeader() {
                 <div class="megamenu-col">
                   <h4 class="megamenu-title">Explore</h4>
                   <a href="contest-2025.html">2025 Finalists</a>
-                  <a href="contest-2025.html#champions">2025 Champions</a>
+                  <a href="contest-2025.html#champions">2025 Contestants</a>
                   <a href="past-contests.html">Past Champions</a>
                 </div>
               </div>

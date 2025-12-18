@@ -1868,3 +1868,30 @@
       width: 100%;
       border-radius: 2px;
     }
+
+    /* --- Champions Section Overrides --- */
+    #2025-champions-grid .finalist-row {
+      gap: 10rem;
+    }
+
+    #2025-champions-grid .finalists-wrapper {
+      padding-left: 8rem;
+    }
+
+    #2025-champions-grid .finalist-grid {
+      display: flex !important;
+      justify-content: center !important;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    #2025-champions-grid .finalist-card {
+      width: 160px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 480px) {
+      #2025-champions-grid .finalist-card {
+        width: 45%;
+      }
+    }
