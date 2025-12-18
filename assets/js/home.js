@@ -49,33 +49,96 @@ document.addEventListener('DOMContentLoaded', () => {
     const video = document.getElementById('heroVideo');
     const playPauseBtn = document.getElementById('playPauseBtn');
     const muteBtn = document.getElementById('muteBtn');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const videoContainer = document.getElementById('videoContainer');
 
     if (video) {
         // Play/Pause
-        playPauseBtn.addEventListener('click', () => {
+        // Play/Pause Logic
+        function togglePlay() {
             if (video.paused) {
                 video.play();
-                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-
-                // Auto Fullscreen on Play (only if supported)
-                if (video.requestFullscreen) {
-                    video.requestFullscreen();
-                } else if (video.webkitRequestFullscreen) {
-                    video.webkitRequestFullscreen();
-                } else if (video.msRequestFullscreen) {
-                    video.msRequestFullscreen();
-                }
+                toggleFullscreen();
             } else {
                 video.pause();
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             }
+        }
+
+        playPauseBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent ensuring video click interaction conflicts
+            togglePlay();
+        });
+
+        // Toggle play on video click (enables pausing when button is hidden)
+        video.addEventListener('click', () => {
+            togglePlay();
+        });
+
+        // Ensure button visibility matches state
+        video.addEventListener('pause', () => {
+            playPauseBtn.style.display = 'flex'; // Show button
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        });
+
+        video.addEventListener('play', () => {
+            playPauseBtn.style.display = 'none'; // Hide button completely
         });
 
         // Mute/Unmute
-        muteBtn.addEventListener('click', () => {
+        muteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             video.muted = !video.muted;
             updateVolumeIcon();
         });
+
+        // Fullscreen Toggle
+        if (fullscreenBtn) {
+            fullscreenBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFullscreen();
+            });
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+                // Enter fullscreen
+                if (videoContainer.requestFullscreen) {
+                    videoContainer.requestFullscreen();
+                } else if (videoContainer.webkitRequestFullscreen) {
+                    videoContainer.webkitRequestFullscreen();
+                } else if (videoContainer.mozRequestFullScreen) {
+                    videoContainer.mozRequestFullScreen();
+                } else if (video.webkitEnterFullscreen) {
+                    // Fallback for iOS Safari
+                    video.webkitEnterFullscreen();
+                }
+
+                updateFullscreenIcon(true);
+            } else {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+
+                updateFullscreenIcon(false);
+            }
+        }
+
+        function updateFullscreenIcon(isFullscreen) {
+            if (fullscreenBtn) {
+                if (isFullscreen) {
+                    fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+                } else {
+                    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+                }
+            }
+        }
 
         function updateVolumeIcon() {
             if (video.muted) {
@@ -83,6 +146,41 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
             }
+        }
+
+        // Listen for fullscreen changes
+        document.addEventListener('fullscreenchange', () => {
+            updateFullscreenIcon(!!document.fullscreenElement);
+        });
+        document.addEventListener('webkitfullscreenchange', () => {
+            updateFullscreenIcon(!!document.webkitFullscreenElement);
+        });
+        document.addEventListener('mozfullscreenchange', () => {
+            updateFullscreenIcon(!!document.mozFullScreenElement);
+        });
+        document.addEventListener('msfullscreenchange', () => {
+            updateFullscreenIcon(!!document.msFullscreenElement);
+        });
+
+        // Progress Bar Logic
+        const videoProgress = document.getElementById('videoProgress');
+        if (videoProgress) {
+            video.addEventListener('timeupdate', () => {
+                const percentage = (video.currentTime / video.duration) * 100;
+                videoProgress.value = percentage || 0;
+                // Optional: distinct color for played portion via gradient
+                videoProgress.style.background = `linear-gradient(to right, var(--color-secondary) ${percentage}%, rgba(255,255,255,0.2) ${percentage}%)`;
+            });
+
+            videoProgress.addEventListener('input', (e) => {
+                e.stopPropagation(); // Prevent video click toggle
+                const time = (videoProgress.value / 100) * video.duration;
+                video.currentTime = time;
+            });
+
+            videoProgress.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
         }
 
         // Initialize state

@@ -9,8 +9,8 @@ function loadHeader() {
   <header class="header">
     <div class="container header-content">
       <a href="index.html" class="logo-placeholder" style="display: flex; align-items: center;">
-        <img src="./assets/logo.png" height="180px" alt="The Qatar Talks">
-        <h2>The Qatar <br> Talks</h2>
+        <img src="./assets/logo.png" height="80px" alt="The Qatar Talks">
+        <h2>The Qatar Talks</h2>
       </a>
       <div class="mobile-menu-toggle">
         <i class="fas fa-bars"></i>
@@ -39,6 +39,7 @@ function loadHeader() {
               </div>
             </div>
           </li>
+          <li><a href="past-contests.html" class="nav-link" data-page="past-champions">Past Champions</a></li>
           <li><a href="news.html" class="nav-link" data-page="news">News & Media</a></li>
           <li><a href="contact.html" class="nav-link" data-page="contact">Contact Us</a></li>
           <div class="header-actions">
