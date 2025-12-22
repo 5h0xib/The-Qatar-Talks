@@ -163,4 +163,57 @@ document.addEventListener('DOMContentLoaded', () => {
         video.muted = false; // Ensure starts unmuted
         updateVolumeIcon();
     }
+
+    // --- Image Popup/Lightbox for 2025 CONTESTANTS Section ---
+    const contestantsSection = document.getElementById('2025-champions');
+    if (contestantsSection) {
+        const contestantImages = contestantsSection.querySelectorAll('.champion-big-image');
+
+        // Create modal elements
+        const modal = document.createElement('div');
+        modal.className = 'image-modal';
+        modal.innerHTML = `
+            <div class="image-modal-content">
+                <span class="image-modal-close">&times;</span>
+                <img class="image-modal-img" src="" alt="Contestant">
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        const modalImg = modal.querySelector('.image-modal-img');
+        const closeBtn = modal.querySelector('.image-modal-close');
+
+        // Add click listeners to each image
+        contestantImages.forEach(img => {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                modalImg.src = img.src;
+                modalImg.alt = img.alt;
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+        });
+
+        // Close modal on X button click
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal on background click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
 });
