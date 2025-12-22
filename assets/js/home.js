@@ -1,31 +1,8 @@
+
+
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Champions Accordion Logic ---
-    const headers = document.querySelectorAll('.accordion-header');
 
-    headers.forEach(header => {
-        header.addEventListener('click', () => {
-            const item = header.parentElement;
-            const content = item.querySelector('.accordion-content');
-            const isActive = item.classList.contains('active');
 
-            // Close all others
-            document.querySelectorAll('.accordion-item').forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('active');
-                    otherItem.querySelector('.accordion-content').style.maxHeight = null;
-                }
-            });
-
-            // Toggle current
-            if (isActive) {
-                item.classList.remove('active');
-                content.style.maxHeight = null;
-            } else {
-                item.classList.add('active');
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
-        });
-    });
 
     // --- Read Our Story Toggle ---
     const storyBtn = document.getElementById('read-story-btn');
@@ -58,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
         function togglePlay() {
             if (video.paused) {
                 video.play();
-                toggleFullscreen();
             } else {
                 video.pause();
             }

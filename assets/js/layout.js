@@ -25,25 +25,46 @@ function loadHeader() {
               <div class="megamenu-grid">
                 <!-- Column 1 -->
                 <div class="megamenu-col">
-                  <h4 class="megamenu-title">Participate</h4>
-                  <a href="about.html#join">How to Join</a>
-                  <a href="about.html#categories">Contest Categories</a>
+                  <a href="about.html#join">About</a>
+                  <a href="about.html#categories">Contest Structure</a>
                 </div>
                 <!-- Column 2 -->
                 <div class="megamenu-col">
-                  <h4 class="megamenu-title">Explore</h4>
+                  <a href="index.html#2025-champions-grid">2025 Champions</a>
                   <a href="contest-2025.html">2025 Finalists</a>
                   <a href="contest-2025.html#champions">2025 Contestants</a>
-                  <a href="past-contests.html">Past Champions</a>
                 </div>
               </div>
             </div>
           </li>
-          <li><a href="past-contests.html" class="nav-link" data-page="past-champions">Past Champions</a></li>
+          <li class="has-megamenu">
+            <a href="#" class="nav-link" data-page="past-contests">Past Contests</a>
+            <div class="megamenu" style="min-width: 200px; left: 0; transform: none;">
+              <div class="megamenu-grid" style="grid-template-columns: 1fr; gap: 0;">
+                <div class="megamenu-col">
+                  <a href="past-contests.html#2024">2024</a>
+                  <a href="past-contests.html#2023">2023</a>
+                  <a href="past-contests.html#2022">2022</a>
+                  <a href="past-contests.html#2021">2021</a>
+                </div>
+              </div>
+            </div>
+          </li>
           <li><a href="news.html" class="nav-link" data-page="news">News & Media</a></li>
           <li><a href="contact.html" class="nav-link" data-page="contact">Contact Us</a></li>
           <div class="header-actions">
-            <a href="contact.html#register" class="btn btn-primary" style="color: white;">Login / Registration</a>
+            <div class="dropdown-container">
+              <button class="btn btn-primary dropdown-btn" style="color: white; display: flex; align-items: center; gap: 0.5rem;">
+                Login / Registration <i class="fas fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="#login-contestant">Contestant</a>
+                <a href="#login-judges">Judges</a>
+                <a href="#login-volunteers">Volunteers</a>
+                <a href="#login-tqt">TQT</a>
+                <a href="#login-guest">Guest</a>
+              </div>
+            </div>
           </div>
         </ul>
       </nav>
@@ -85,7 +106,7 @@ function loadHeader() {
   const hasMegamenu = document.querySelectorAll('.has-megamenu');
   hasMegamenu.forEach(item => {
     item.addEventListener('click', (e) => {
-      if (window.innerWidth <= 768) {
+      if (window.innerWidth <= 1020) {
         if (e.target.closest('.megamenu')) return;
 
         if (!item.classList.contains('active')) {
