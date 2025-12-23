@@ -195,6 +195,10 @@
 
       .has-megamenu.active .megamenu {
         display: block;
+        margin-left: -30px;
+        color: #333;
+        border-left: 2px solid var(--color-secondary);
+        border-radius: 10px;
       }
 
       .has-megamenu>a::after {
@@ -206,66 +210,114 @@
       }
     }
 
-    .has-megamenu {
-      position: relative;
+    @media (min-width: 1021px) {
+      .has-megamenu {
+        position: relative;
+      }
+
+      .megamenu {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        display: block;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        border-top: 3px solid var(--color-secondary);
+        border-radius: 0 0 8px 8px;
+        min-width: 500px;
+      }
+
+      .megamenu-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .has-megamenu:hover .megamenu {
+        opacity: 1;
+        visibility: visible;
+        top: 100%;
+      }
+
+      .megamenu-col {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .megamenu-title {
+        color: var(--color-primary);
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 700;
+      }
+
+      .megamenu-col a {
+        display: block;
+        font-size: 0.95rem;
+        color: #666;
+        margin-bottom: 0.5rem;
+        padding: 0;
+        transition: color 0.2s ease;
+      }
+
+      .megamenu-col a:hover {
+        color: var(--color-secondary);
+        display: block;
+      }
     }
 
-    .megamenu {
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: white;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      padding: 2rem;
-      display: block;
-      /* Changed from flex to block to contain grid */
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      border-top: 3px solid var(--color-secondary);
-      border-radius: 0 0 8px 8px;
-      min-width: 500px;
-    }
+    @media (max-width: 1020px) {
+      .header-actions {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        /* Align center */
+        margin-top: 1rem;
+        padding-left: 0;
+      }
 
-    .megamenu-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
+      .dropdown-container {
+        position: relative;
+        /* Anchor for absolute positioning of dropdown */
+      }
 
-    .has-megamenu:hover .megamenu {
-      opacity: 1;
-      visibility: visible;
-      top: 100%;
-    }
+      .dropdown-content {
+        /* Center relative to button */
+        /* Center relative to button */
+        right: auto;
+        width: auto;
+        min-width: 200px;
+        max-width: none;
+        text-align: left;
 
-    .megamenu-col {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+        /* Expand Upwards */
+        top: auto;
+        bottom: 100%;
+        margin-bottom: 5px;
+        margin-top: 0;
+      }
 
-    .megamenu-title {
-      color: var(--color-primary);
-      margin-bottom: 0.8rem;
-      font-size: 0.95rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 700;
-    }
+      /* Fix for "2025 Contest" and "Past Contests" alignment */
+      .megamenu-col a {
+        display: block;
+        /* Ensure each link takes full line */
+        font-size: 0.9rem;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        /* Optional: nice separator */
+      }
 
-    .megamenu-col a {
-      display: block;
-      font-size: 0.95rem;
-      color: #666;
-      margin-bottom: 0.5rem;
-      padding: 0;
-      transition: color 0.2s ease;
-    }
-
-    .megamenu-col a:hover {
-      color: var(--color-secondary);
+      .megamenu-col a:last-child {
+        border-bottom: none;
+      }
     }
 
     .btn-primary {
