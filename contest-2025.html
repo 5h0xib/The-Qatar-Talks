@@ -19,7 +19,72 @@
 <body>
 
   <!-- Header -->
-  <div id="header-container"></div>
+  <header class="header">
+    <div class="container header-content">
+      <a href="index.html" class="logo-placeholder" style="display: flex; align-items: center;">
+        <img src="./assets/logo.png" height="80px" alt="The Qatar Talks">
+        <h2>The Qatar Talks</h2>
+      </a>
+      <div class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
+          <li><a href="about.html" class="nav-link" data-page="about">About Us</a></li>
+          <li class="has-megamenu">
+            <a href="#" class="nav-link" data-page="contest">2025 Contest</a>
+            <div class="megamenu">
+              <div class="megamenu-grid">
+                <!-- Column 1 -->
+                <div class="megamenu-col">
+                  <a href="about.html#join">About</a>
+                  <a href="about.html#categories">Contest Structure</a>
+                </div>
+                <!-- Column 2 -->
+                <div class="megamenu-col">
+                  <a href="index.html#2025-champions-grid">2025 Champions</a>
+                  <a href="index.html#2025">2025 Finalists</a>
+                  <a href="index.html#2025-champions">2025 Contestants</a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="has-megamenu">
+            <a href="#" class="nav-link" data-page="past-contests">Past Contests</a>
+            <div class="megamenu" style="min-width: 200px; left: 0; transform: none;">
+              <div class="megamenu-grid" style="grid-template-columns: 1fr; gap: 0;">
+                <div class="megamenu-col">
+                  <a href="past-contests.html#2024">2024</a>
+                  <a href="past-contests.html#2023">2023</a>
+                  <a href="past-contests.html#2022">2022</a>
+                  <a href="past-contests.html#2021">2021</a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li><a href="news.html" class="nav-link" data-page="news">News & Media</a></li>
+          <li><a href="contact.html" class="nav-link" data-page="contact">Contact Us</a></li>
+        </ul>
+        <!-- Moved dropdown outside ul -->
+        <div class="header-actions">
+          <div class="dropdown-container">
+            <button class="btn btn-primary dropdown-btn"
+              style="color: white; display: flex; align-items: center; gap: 0.5rem;">
+              Login <i class="fas fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <a href="#login-contestant">Contestant</a>
+              <a href="#login-judges">Judges</a>
+              <a href="#login-volunteers">Volunteers</a>
+              <a href="#login-tqt">TQT</a>
+              <a href="#login-guest">Guest</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
   <section class="section contest-page-section" style="padding-top: 260px;">
     <div class="container">
       <h2 class="section-title">2025 Contest</h2>
