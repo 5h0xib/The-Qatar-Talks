@@ -147,8 +147,8 @@ function loadFooter() {
       </div>
       <div class="footer-col">
         <h5>Contact</h5>
-        <p>info@theqatartalks.com</p>
-        <p>+974 1234 5678</p>
+        <p>Email : tqt.team.contest@gmail.com</p>
+        <p>Contact Number : 6614 8696</p>
       </div>
       <div class="footer-col">
         <h5>Follow Us</h5>
